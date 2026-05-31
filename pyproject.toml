@@ -14,6 +14,7 @@ license = { text = "MIT" }
 dependencies = [
     "ebf-core",
     "ebf-domain",
+    "ebf-trading",
     "ebf-ui",
 ]
 
@@ -23,11 +24,13 @@ dev = [
     "pytest-cov>=5.0",
     "mypy>=1.10",
     "ruff>=0.5",
+    "pytest-qt>=4.5.0",
 ]
 
 [tool.uv.sources]
 ebf-core = { path = "../EbfUtil", editable = true }
 ebf-domain = { path = "../EbfDomain", editable = true }
+ebf-trading = { path = "../EbfTrading", editable = true }
 ebf-ui = { path = "../EbfUI", editable = true }
 
 [tool.pytest.ini_options]
