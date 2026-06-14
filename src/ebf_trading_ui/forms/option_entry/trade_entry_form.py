@@ -4,7 +4,7 @@ from ebf_ui.state.state_tracker import StateTracker
 from ebf_ui.widgets.fields.combo_box_binding import ComboBoxBinding
 from ebf_ui.widgets.forms.form_binding import FormBinding
 
-from ebf_trading_ui.forms.option_entry.ui_trade_entry import Ui_tradeEntryDialog
+from ebf_trading_ui.forms.option_entry.ui_trade_entry_form import Ui_tradeEntryDialog
 from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
 
 
