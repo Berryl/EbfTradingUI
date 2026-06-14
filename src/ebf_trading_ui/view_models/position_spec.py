@@ -9,13 +9,6 @@ from ebf_trading.domain.value_objects.positions.position_side import PositionSid
 
 @dataclass(frozen=True)
 class PositionSpec:
-    """
-    Carries a PositionSide and OptionType pair as a single combo box item.
-
-    Each instance knows its own abbreviation, label, and display string.
-    Use the module-level constants rather than constructing directly.
-    """
-
     side: PositionSide
     option_type: OptionType
     abbreviation: str
