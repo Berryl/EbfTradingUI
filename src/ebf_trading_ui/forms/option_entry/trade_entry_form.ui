@@ -6,237 +6,251 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
+    <width>784</width>
     <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>360</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
    </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
+   <property name="leftMargin">
+    <number>12</number>
    </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+   <property name="topMargin">
+    <number>12</number>
    </property>
-  </widget>
-  <widget class="QFrame" name="tradeDetailsFrame">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>760</width>
-     <height>291</height>
-    </rect>
+   <property name="rightMargin">
+    <number>12</number>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>760</width>
-     <height>240</height>
-    </size>
+   <property name="bottomMargin">
+    <number>12</number>
    </property>
-   <property name="accessibleName">
-    <string/>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Shape::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Shadow::Raised</enum>
-   </property>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>-10</y>
-      <width>457</width>
-      <height>43</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Trade Details</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>581</width>
-      <height>244</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Expiration</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLabel" name="label_14">
-       <property name="text">
-        <string>High of Day</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QLineEdit" name="underlying"/>
-     </item>
-     <item row="7" column="2">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>Low of Day</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="premium"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Strike</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="3">
-      <widget class="QLineEdit" name="netAmount"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Contracts</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>Premium</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="strike"/>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>Limit Price</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="3">
-      <widget class="QLabel" name="label_16">
-       <property name="text">
-        <string>Score</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="3">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Symbol</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLineEdit" name="fees"/>
-     </item>
-     <item row="5" column="3">
-      <widget class="QLineEdit" name="symbol"/>
-     </item>
-     <item row="2" column="3">
-      <widget class="QLabel" name="label_12">
-       <property name="text">
-        <string>Net Amount</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>Fees</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="contracts"/>
-     </item>
-     <item row="4" column="2">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Underlying</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QDateEdit" name="dateEdit_2"/>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLineEdit" name="limitPrice"/>
-     </item>
-     <item row="6" column="0" colspan="4">
-      <widget class="QLineEdit" name="tradeNarrative"/>
-     </item>
-     <item row="1" column="3">
-      <widget class="QTimeEdit" name="timeEdit"/>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Time</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QDateEdit" name="dateEdit"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Date</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QComboBox" name="position"/>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Position</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QLineEdit" name="highOfDay"/>
-     </item>
-     <item row="8" column="2">
-      <widget class="QLineEdit" name="lowOfDay"/>
-     </item>
-     <item row="8" column="3">
-      <widget class="QLineEdit" name="score"/>
-     </item>
-    </layout>
-   </widget>
-  </widget>
+   <item>
+    <widget class="QFrame" name="tradeDetailsFrame">
+     <property name="minimumSize">
+      <size>
+       <width>760</width>
+       <height>240</height>
+      </size>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>-10</y>
+        <width>541</width>
+        <height>43</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Trade Details</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>581</width>
+        <height>244</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Expiration</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>High of Day</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="underlying"/>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Low of Day</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="premium"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Strike</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="netAmount"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Contracts</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Premium</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="strike"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Limit Price</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Score</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Symbol</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="fees"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="symbol"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Net Amount</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Fees</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLineEdit" name="contracts"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Underlying</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QDateEdit" name="dateEdit_2"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLineEdit" name="limitPrice"/>
+       </item>
+       <item row="6" column="0" colspan="4">
+        <widget class="QLineEdit" name="tradeNarrative"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QTimeEdit" name="timeEdit"/>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Time</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QDateEdit" name="dateEdit"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Date</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QComboBox" name="position"/>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Position</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="highOfDay"/>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="lowOfDay"/>
+       </item>
+       <item row="8" column="3">
+        <widget class="QLineEdit" name="score"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="saveButtonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Save</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>saveButtonBox</sender>
    <signal>accepted()</signal>
    <receiver>tradeEntryDialog</receiver>
    <slot>accept()</slot>
@@ -252,7 +266,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>saveButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>tradeEntryDialog</receiver>
    <slot>reject()</slot>
