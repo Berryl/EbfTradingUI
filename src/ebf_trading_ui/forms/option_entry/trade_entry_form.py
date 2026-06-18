@@ -49,7 +49,7 @@ class TradeEntryForm(QDialog):
             line_edit=self.ui.fillTime,
             tracker=self.tracker,
             get_value=lambda: self.model.fill_time,
-            set_value=lambda value: setattr(self.model, "execution_date", value),
+            set_value=lambda value: setattr(self.model, "fill_time", value),
         )
 
         self.form = FormBinding([

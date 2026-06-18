@@ -40,7 +40,7 @@ class TestTradeEntryForm:
                 def test_model_is_none(self, model):
                     assert model.position_spec is None
 
-            class TestAfterChange:
+            class TestUiAfterChange:
 
                 @pytest.mark.parametrize("spec", [LC, LP, SC, SP])
                 def test_the_model_is_updated(self, ui, model, spec):
@@ -60,6 +60,16 @@ class TestTradeEntryForm:
 
                 def test_model_is_empty(self, model: TradeEntryViewModel):
                     assert model.fill_time == ""
+
+            class TestUiAfterChange:
+                def test_the_model_is_updated(self, ui, model):
+                    ui.fillTime.setText("2022-01-01")
+                    assert model.fill_time == "2022-01-01"
+
+                def test_the_tracker_is_dirty(self, ui, tracker):
+                    assert not tracker.is_dirty
+                    ui.fillTime.setText("2022-01-01")
+                    assert tracker.is_dirty
 
     class TestWhenExistingLongCall:
 
