@@ -5,16 +5,19 @@ from dataclasses import dataclass, field
 from ebf_domain.rules.validation_result import ValidationResult
 from ebf_trading.domain.value_objects.option_specific.input.option_fill_input import OptionFillInput
 from ebf_trading.domain.value_objects.option_specific.input.option_input import OptionInput
-from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
+from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
+from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
 
 
 @dataclass
 class TradeEntryViewModel:
     """View model for the Trade Entry form.
 
+    Holds all raw user-editable states for a single trade.
+
     Args:
-        underlying: Pre-populated ticker symbol, if known.  When supplied the
+        underlying: Pre-populated ticker symbol, if known.  When supplied, the
             corresponding widget is rendered read-only (see ``underlying_locked``).
     """
 
@@ -27,8 +30,7 @@ class TradeEntryViewModel:
     # region Fill fields
     premium: str = ""
     fees: str = ""
-    execution_date: str = ""
-    execution_time: str = ""
+    fill_time: str = ""
     # endregion
 
     # region Trade fields
@@ -56,13 +58,11 @@ class TradeEntryViewModel:
         fill = record.fill
         premium = ""
         fees = ""
-        execution_date = ""
-        execution_time = ""
+        fill_time = ""
         if fill is not None:
             premium = str(fill.price_per_contract)
             fees = str(fill.fees)
-            execution_date = fill.execution_time.strftime("%Y-%m-%d")
-            execution_time = fill.execution_time.strftime("%H:%M")
+            fill_time = _format_datetime(fill.execution_time)
 
         fill_score = record.fill_score
         high_of_day = str(fill_score.hod) if fill_score is not None else ""
@@ -73,11 +73,10 @@ class TradeEntryViewModel:
         return cls(
             position_spec=position_spec,
             strike=str(record.strike_amount),
-            expiration=record.expiration_deadline.strftime("%Y-%m-%d"),
+            expiration=_format_date(record.expiration_deadline.date()),
             premium=premium,
             fees=fees,
-            execution_date=execution_date,
-            execution_time=execution_time,
+            fill_time=fill_time,
             contracts=str(record.quantity_value),
             underlying=record.underlying,
             limit_price=limit_price,
@@ -102,7 +101,7 @@ class TradeEntryViewModel:
             OptionFillInput(
                 price_per_contract=self.premium,
                 fees=self.fees,
-                execution_time=f"{self.execution_date} {self.execution_time}".strip(),
+                execution_time=self.fill_time,
             ).validate().violations
         )
 

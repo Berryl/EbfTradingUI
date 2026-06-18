@@ -3,6 +3,7 @@ from ebf_domain.rules.validation_result import ValidationResult
 from ebf_ui.binding.validation.validation_binding import ValidationBinding, bind_validation
 from ebf_ui.state.state_tracker import StateTracker
 from ebf_ui.widgets.fields.combo_box_binding import ComboBoxBinding
+from ebf_ui.widgets.fields.line_edit_binding import LineEditBinding
 from ebf_ui.widgets.forms.form_binding import FormBinding
 
 from ebf_trading_ui.forms.option_entry.ui_trade_entry_form import Ui_tradeEntryDialog
@@ -42,6 +43,13 @@ class TradeEntryForm(QDialog):
             get_text=str,
             get_value=lambda: self.model.position_spec,
             set_value=lambda value: setattr(self.model, "position_spec", value),
+        )
+        
+        self.fill_time_binding = LineEditBinding(
+            line_edit=self.ui.fillTime,
+            tracker=self.tracker,
+            get_value=lambda: self.model.fill_time,
+            set_value=lambda value: setattr(self.model, "execution_date", value),
         )
 
         self.form = FormBinding([

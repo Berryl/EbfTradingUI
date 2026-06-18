@@ -15,10 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDateEdit,
-    QDialog, QDialogButtonBox, QFrame, QGridLayout,
-    QLabel, QLineEdit, QSizePolicy, QTimeEdit,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog,
+    QDialogButtonBox, QFrame, QGridLayout, QLabel,
+    QLineEdit, QSizePolicy, QVBoxLayout, QWidget)
+
+from ebf_ui.widgets.custom.date_time_line_edit import DateTimeLineEdit
 
 class Ui_tradeEntryDialog(object):
     def setupUi(self, tradeEntryDialog):
@@ -142,11 +143,6 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_8, 4, 2, 1, 1)
 
-        self.dateEdit_2 = QDateEdit(self.layoutWidget)
-        self.dateEdit_2.setObjectName(u"dateEdit_2")
-
-        self.gridLayout.addWidget(self.dateEdit_2, 5, 0, 1, 1)
-
         self.limitPrice = QLineEdit(self.layoutWidget)
         self.limitPrice.setObjectName(u"limitPrice")
 
@@ -156,26 +152,6 @@ class Ui_tradeEntryDialog(object):
         self.tradeNarrative.setObjectName(u"tradeNarrative")
 
         self.gridLayout.addWidget(self.tradeNarrative, 6, 0, 1, 4)
-
-        self.timeEdit = QTimeEdit(self.layoutWidget)
-        self.timeEdit.setObjectName(u"timeEdit")
-
-        self.gridLayout.addWidget(self.timeEdit, 1, 3, 1, 1)
-
-        self.label_4 = QLabel(self.layoutWidget)
-        self.label_4.setObjectName(u"label_4")
-
-        self.gridLayout.addWidget(self.label_4, 0, 3, 1, 1)
-
-        self.dateEdit = QDateEdit(self.layoutWidget)
-        self.dateEdit.setObjectName(u"dateEdit")
-
-        self.gridLayout.addWidget(self.dateEdit, 1, 2, 1, 1)
-
-        self.label_3 = QLabel(self.layoutWidget)
-        self.label_3.setObjectName(u"label_3")
-
-        self.gridLayout.addWidget(self.label_3, 0, 2, 1, 1)
 
         self.position = QComboBox(self.layoutWidget)
         self.position.setObjectName(u"position")
@@ -201,6 +177,21 @@ class Ui_tradeEntryDialog(object):
         self.score.setObjectName(u"score")
 
         self.gridLayout.addWidget(self.score, 8, 3, 1, 1)
+
+        self.expiration = QLineEdit(self.layoutWidget)
+        self.expiration.setObjectName(u"expiration")
+
+        self.gridLayout.addWidget(self.expiration, 5, 0, 1, 1)
+
+        self.label_4 = QLabel(self.layoutWidget)
+        self.label_4.setObjectName(u"label_4")
+
+        self.gridLayout.addWidget(self.label_4, 0, 2, 1, 2)
+
+        self.fillTime = DateTimeLineEdit(self.layoutWidget)
+        self.fillTime.setObjectName(u"fillTime")
+
+        self.gridLayout.addWidget(self.fillTime, 1, 2, 1, 2)
 
 
         self.verticalLayout.addWidget(self.tradeDetailsFrame)
@@ -239,8 +230,7 @@ class Ui_tradeEntryDialog(object):
         self.label_12.setText(QCoreApplication.translate("tradeEntryDialog", u"Net Amount", None))
         self.label_11.setText(QCoreApplication.translate("tradeEntryDialog", u"Fees", None))
         self.label_8.setText(QCoreApplication.translate("tradeEntryDialog", u"Underlying", None))
-        self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Time", None))
-        self.label_3.setText(QCoreApplication.translate("tradeEntryDialog", u"Date", None))
         self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
+        self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Fill Time", None))
     # retranslateUi
 
