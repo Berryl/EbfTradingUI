@@ -25,6 +25,8 @@ class TradeEntryForm(QDialog):
         self._setup_bindings()
         self._setup_commands()
 
+        self.ui.position.setFocus()
+
     # region Setup
     def _build_model(self, record: TradeRecord) -> None:
         self.model = TradeEntryViewModel.from_record(record)

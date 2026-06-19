@@ -29,7 +29,10 @@ if __name__ == "__main__":
         fill=DemoFillRecord(),
     )
 
-    form = TradeEntryForm(record)
+    form = TradeEntryForm(NullTradeRecord())
+    form.ui.saveButtonBox.clicked.connect(
+        _save
+    )
     form.resize(820, 420)
     form.show()
 
