@@ -6,7 +6,7 @@ from ebf_ui.widgets.fields.combo_box_binding import ComboBoxBinding
 from ebf_ui.widgets.fields.line_edit_binding import LineEditBinding
 from ebf_ui.widgets.forms.form_binding import FormBinding
 
-from ebf_trading_ui.forms.option_entry.ui_trade_entry_form import Ui_tradeEntryDialog
+from ebf_trading_ui.forms.trade_entry.ui_trade_entry_form import Ui_tradeEntryDialog
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
 from ebf_trading_ui.view_models.position_spec import ALL
 from ebf_trading_ui.view_models.trade_entry_view_model import TradeEntryViewModel

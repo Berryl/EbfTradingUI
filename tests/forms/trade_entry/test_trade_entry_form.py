@@ -8,8 +8,8 @@ from ebf_trading.domain.value_objects.positions.position_side import PositionSid
 from ebf_ui.state.state_tracker import StateTracker
 from ebf_ui.widgets.custom.date_time_line_edit import _format_datetime
 
-from ebf_trading_ui.forms.option_entry.trade_entry_form import TradeEntryForm
-from ebf_trading_ui.forms.option_entry.ui_trade_entry_form import Ui_tradeEntryDialog
+from ebf_trading_ui.forms.trade_entry.trade_entry_form import TradeEntryForm
+from ebf_trading_ui.forms.trade_entry.ui_trade_entry_form import Ui_tradeEntryDialog
 from ebf_trading_ui.view_models.ports.null_trade_record import NullTradeRecord
 from ebf_trading_ui.view_models.ports.trade_record import FillRecord
 from ebf_trading_ui.view_models.position_spec import LC, SP
