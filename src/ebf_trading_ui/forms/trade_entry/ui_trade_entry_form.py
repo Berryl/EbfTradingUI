@@ -120,6 +120,7 @@ class Ui_tradeEntryDialog(object):
 
         self.symbol = QLineEdit(self.layoutWidget)
         self.symbol.setObjectName(u"symbol")
+        self.symbol.setEnabled(False)
 
         self.gridLayout.addWidget(self.symbol, 5, 3, 1, 1)
 
@@ -175,6 +176,7 @@ class Ui_tradeEntryDialog(object):
 
         self.score = QLineEdit(self.layoutWidget)
         self.score.setObjectName(u"score")
+        self.score.setEnabled(False)
 
         self.gridLayout.addWidget(self.score, 8, 3, 1, 1)
 
@@ -204,6 +206,20 @@ class Ui_tradeEntryDialog(object):
 
         self.verticalLayout.addWidget(self.saveButtonBox)
 
+        QWidget.setTabOrder(self.position, self.fillTime)
+        QWidget.setTabOrder(self.fillTime, self.contracts)
+        QWidget.setTabOrder(self.contracts, self.premium)
+        QWidget.setTabOrder(self.premium, self.fees)
+        QWidget.setTabOrder(self.fees, self.netAmount)
+        QWidget.setTabOrder(self.netAmount, self.expiration)
+        QWidget.setTabOrder(self.expiration, self.strike)
+        QWidget.setTabOrder(self.strike, self.underlying)
+        QWidget.setTabOrder(self.underlying, self.symbol)
+        QWidget.setTabOrder(self.symbol, self.tradeNarrative)
+        QWidget.setTabOrder(self.tradeNarrative, self.limitPrice)
+        QWidget.setTabOrder(self.limitPrice, self.highOfDay)
+        QWidget.setTabOrder(self.highOfDay, self.lowOfDay)
+        QWidget.setTabOrder(self.lowOfDay, self.score)
 
         self.retranslateUi(tradeEntryDialog)
         self.saveButtonBox.accepted.connect(tradeEntryDialog.accept)
@@ -230,6 +246,7 @@ class Ui_tradeEntryDialog(object):
         self.label_12.setText(QCoreApplication.translate("tradeEntryDialog", u"Net Amount", None))
         self.label_11.setText(QCoreApplication.translate("tradeEntryDialog", u"Fees", None))
         self.label_8.setText(QCoreApplication.translate("tradeEntryDialog", u"Underlying", None))
+        self.position.setPlaceholderText(QCoreApplication.translate("tradeEntryDialog", u"Choose a position...", None))
         self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
         self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Fill Time", None))
     # retranslateUi
