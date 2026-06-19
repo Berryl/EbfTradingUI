@@ -20,7 +20,7 @@ from ebf_trading_ui.view_models.trade_entry_view_model import TradeEntryViewMode
 class StubFillRecord:
     price_per_contract: Money = field(default_factory=lambda: Money.mint("1.00"))
     fees: Money = field(default_factory=lambda: Money.mint("0.00"))
-    execution_time: datetime = datetime(2026, 6, 15, 9, 30, 0)
+    fill_time: datetime = datetime(2026, 6, 15, 9, 30, 0)
 
 
 def _create_sut(
@@ -131,18 +131,24 @@ class TestTradeEntryForm:
     class TestWhenExistingRecordHasFill:
 
         @pytest.fixture
+        def formatted_fill_time(self)-> str:
+            return _format_datetime(datetime(2026, 6, 15, 9, 30, 0))
+
+        @pytest.fixture
         def sut(self, qtbot) -> TradeEntryForm:
+            fill_stub = StubFillRecord(fill_time=datetime(2026, 6, 15, 9, 30, 0))
             return _create_sut(
-                qtbot, PositionSide.LONG, OptionType.CALL, fill=StubFillRecord()
+                qtbot, PositionSide.LONG, OptionType.CALL, fill=fill_stub
             )
 
         class TestFillTime:
             class TestInitialState:
 
-                def test_widget_shows_formatted_fill_time(self, sut):
-                    expected = _format_datetime(datetime(2026, 6, 15, 9, 30, 0))
-                    assert sut.ui.fillTime.text() == expected
+                def test_widget_shows_formatted_fill_time(self, sut, formatted_fill_time):
+                    assert sut.ui.fillTime.text() == formatted_fill_time
 
-                def test_model_holds_formatted_fill_time(self, sut):
-                    expected = _format_datetime(datetime(2026, 6, 15, 9, 30, 0))
-                    assert sut.model.fill_time == expected
+                def test_model_holds_formatted_fill_time(self, sut, formatted_fill_time):
+                    assert sut.model.fill_time == formatted_fill_time
+
+                def test_widget_binding_reflects_model_fill_time(self, sut):
+                    assert sut.ui.fillTime.text() == sut.model.fill_time

@@ -54,6 +54,7 @@ class TradeEntryForm(QDialog):
 
         self.form = FormBinding([
             self.position_binding,
+            self.fill_time_binding,
         ])
 
         self.tracker.begin_edit()

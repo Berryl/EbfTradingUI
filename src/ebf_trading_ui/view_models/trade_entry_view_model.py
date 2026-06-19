@@ -62,7 +62,7 @@ class TradeEntryViewModel:
         if fill is not None:
             premium = str(fill.price_per_contract)
             fees = str(fill.fees)
-            fill_time = _format_datetime(fill.execution_time)
+            fill_time = _format_datetime(fill.fill_time)
 
         fill_score = record.fill_score
         high_of_day = str(fill_score.hod) if fill_score is not None else ""
