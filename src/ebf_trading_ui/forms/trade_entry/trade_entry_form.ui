@@ -100,7 +100,7 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="premium"/>
+        <widget class="MoneyLineEdit" name="premium"/>
        </item>
        <item row="4" column="1">
         <widget class="QLabel" name="label_6">
@@ -110,7 +110,7 @@
         </widget>
        </item>
        <item row="3" column="3">
-        <widget class="QLineEdit" name="netAmount"/>
+        <widget class="MoneyLineEdit" name="netAmount"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_9">
@@ -127,7 +127,7 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QLineEdit" name="strike"/>
+        <widget class="MoneyLineEdit" name="strike"/>
        </item>
        <item row="7" column="0">
         <widget class="QLabel" name="label_13">
@@ -151,7 +151,7 @@
         </widget>
        </item>
        <item row="3" column="2">
-        <widget class="QLineEdit" name="fees"/>
+        <widget class="MoneyLineEdit" name="fees"/>
        </item>
        <item row="5" column="3">
         <widget class="QLineEdit" name="symbol">
@@ -185,7 +185,7 @@
         </widget>
        </item>
        <item row="8" column="0">
-        <widget class="QLineEdit" name="limitPrice"/>
+        <widget class="MoneyLineEdit" name="limitPrice"/>
        </item>
        <item row="6" column="0" colspan="4">
         <widget class="QLineEdit" name="tradeNarrative"/>
@@ -205,10 +205,10 @@
         </widget>
        </item>
        <item row="8" column="1">
-        <widget class="QLineEdit" name="highOfDay"/>
+        <widget class="MoneyLineEdit" name="highOfDay"/>
        </item>
        <item row="8" column="2">
-        <widget class="QLineEdit" name="lowOfDay"/>
+        <widget class="MoneyLineEdit" name="lowOfDay"/>
        </item>
        <item row="8" column="3">
         <widget class="QLineEdit" name="score">
@@ -254,6 +254,11 @@
    <class>DateTimeLineEdit</class>
    <extends>QLineEdit</extends>
    <header>ebf_ui.widgets.custom.date_time_line_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>MoneyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>ebf_ui.widgets.custom.money_line_edit</header>
   </customwidget>
  </customwidgets>
  <tabstops>

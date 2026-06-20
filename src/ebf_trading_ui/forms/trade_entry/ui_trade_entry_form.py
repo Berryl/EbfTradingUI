@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog
     QLineEdit, QSizePolicy, QVBoxLayout, QWidget)
 
 from ebf_ui.widgets.custom.date_time_line_edit import DateTimeLineEdit
+from ebf_ui.widgets.custom.money_line_edit import MoneyLineEdit
 
 class Ui_tradeEntryDialog(object):
     def setupUi(self, tradeEntryDialog):
@@ -68,7 +69,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_15, 7, 2, 1, 1)
 
-        self.premium = QLineEdit(self.layoutWidget)
+        self.premium = MoneyLineEdit(self.layoutWidget)
         self.premium.setObjectName(u"premium")
 
         self.gridLayout.addWidget(self.premium, 3, 1, 1, 1)
@@ -78,7 +79,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_6, 4, 1, 1, 1)
 
-        self.netAmount = QLineEdit(self.layoutWidget)
+        self.netAmount = MoneyLineEdit(self.layoutWidget)
         self.netAmount.setObjectName(u"netAmount")
 
         self.gridLayout.addWidget(self.netAmount, 3, 3, 1, 1)
@@ -93,7 +94,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_10, 2, 1, 1, 1)
 
-        self.strike = QLineEdit(self.layoutWidget)
+        self.strike = MoneyLineEdit(self.layoutWidget)
         self.strike.setObjectName(u"strike")
 
         self.gridLayout.addWidget(self.strike, 5, 1, 1, 1)
@@ -113,7 +114,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_7, 4, 3, 1, 1)
 
-        self.fees = QLineEdit(self.layoutWidget)
+        self.fees = MoneyLineEdit(self.layoutWidget)
         self.fees.setObjectName(u"fees")
 
         self.gridLayout.addWidget(self.fees, 3, 2, 1, 1)
@@ -144,7 +145,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_8, 4, 2, 1, 1)
 
-        self.limitPrice = QLineEdit(self.layoutWidget)
+        self.limitPrice = MoneyLineEdit(self.layoutWidget)
         self.limitPrice.setObjectName(u"limitPrice")
 
         self.gridLayout.addWidget(self.limitPrice, 8, 0, 1, 1)
@@ -164,12 +165,12 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_2, 0, 0, 1, 2)
 
-        self.highOfDay = QLineEdit(self.layoutWidget)
+        self.highOfDay = MoneyLineEdit(self.layoutWidget)
         self.highOfDay.setObjectName(u"highOfDay")
 
         self.gridLayout.addWidget(self.highOfDay, 8, 1, 1, 1)
 
-        self.lowOfDay = QLineEdit(self.layoutWidget)
+        self.lowOfDay = MoneyLineEdit(self.layoutWidget)
         self.lowOfDay.setObjectName(u"lowOfDay")
 
         self.gridLayout.addWidget(self.lowOfDay, 8, 2, 1, 1)
