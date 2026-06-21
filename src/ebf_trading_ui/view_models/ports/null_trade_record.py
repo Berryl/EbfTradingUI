@@ -13,7 +13,7 @@ class NullTradeRecord:
 
     side: None = None
     option_type: None = None
-    quantity_value: int = 1
+    quantity_value: int = 0
     strike_amount: Money = field(default_factory=Money.zero)
     expiration_deadline: datetime = field(default_factory=lambda: md.market_close_datetime(date.today()))
     underlying: str = ""

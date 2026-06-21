@@ -78,7 +78,7 @@ class TradeEntryViewModel:
             premium=premium,
             fees=fees,
             fill_time=fill_time,
-            contracts=str(record.quantity_value),
+            contracts=str(record.quantity_value) if record.quantity_value > 0 else "",
             underlying=record.underlying,
             limit_price=limit_price,
             high_of_day=high_of_day,
