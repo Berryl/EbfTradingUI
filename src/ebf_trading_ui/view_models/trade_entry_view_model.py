@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from decimal import InvalidOperation
 
+from ebf_domain.money.money import Money
 from ebf_domain.rules.validation_result import ValidationResult
 from ebf_trading.domain.value_objects.option_specific.input.option_fill_input import OptionFillInput
 from ebf_trading.domain.value_objects.option_specific.input.option_input import OptionInput
+from ebf_trading.domain.value_objects.positions.position_side import PositionSide
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
 from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
 from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
@@ -13,8 +16,6 @@ from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_date
 @dataclass
 class TradeEntryViewModel:
     """View model for the Trade Entry form.
-
-    Holds all raw user-editable states for a single trade.
 
     Args:
         underlying: Pre-populated ticker symbol, if known.  When supplied, the
@@ -83,6 +84,30 @@ class TradeEntryViewModel:
             high_of_day=high_of_day,
             low_of_day=low_of_day,
         )
+
+    # endregion
+
+    # region Computed
+
+    def net_amount(self) -> Money | None:
+        """Net amount for the fill. Returns None if the position side or any of contracts/premium/fees
+        cannot yet be coerced (e.g., mid-edit or not yet entered).
+        """
+        if self.position_spec is None:
+            return None
+
+        try:
+            premium = Money.mint(self.premium)
+            fees = Money.mint(self.fees)
+            contracts = int(self.contracts)
+        except (InvalidOperation, ValueError, TypeError):
+            return None
+
+        gross = premium * contracts * 100
+
+        if self.position_spec.side == PositionSide.LONG:
+            return -(gross + fees)
+        return gross - fees
 
     # endregion
 

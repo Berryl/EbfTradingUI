@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog
     QLineEdit, QSizePolicy, QVBoxLayout, QWidget)
 
 from ebf_ui.widgets.custom.date_time_line_edit import DateTimeLineEdit
+from ebf_ui.widgets.custom.int_line_edit import IntLineEdit
 from ebf_ui.widgets.custom.money_line_edit import MoneyLineEdit
 
 class Ui_tradeEntryDialog(object):
@@ -135,7 +136,7 @@ class Ui_tradeEntryDialog(object):
 
         self.gridLayout.addWidget(self.label_11, 2, 2, 1, 1)
 
-        self.contracts = QLineEdit(self.layoutWidget)
+        self.contracts = IntLineEdit(self.layoutWidget)
         self.contracts.setObjectName(u"contracts")
 
         self.gridLayout.addWidget(self.contracts, 3, 0, 1, 1)
@@ -154,16 +155,6 @@ class Ui_tradeEntryDialog(object):
         self.tradeNarrative.setObjectName(u"tradeNarrative")
 
         self.gridLayout.addWidget(self.tradeNarrative, 6, 0, 1, 4)
-
-        self.position = QComboBox(self.layoutWidget)
-        self.position.setObjectName(u"position")
-
-        self.gridLayout.addWidget(self.position, 1, 0, 1, 2)
-
-        self.label_2 = QLabel(self.layoutWidget)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 2)
 
         self.highOfDay = MoneyLineEdit(self.layoutWidget)
         self.highOfDay.setObjectName(u"highOfDay")
@@ -185,6 +176,26 @@ class Ui_tradeEntryDialog(object):
         self.expiration.setObjectName(u"expiration")
 
         self.gridLayout.addWidget(self.expiration, 5, 0, 1, 1)
+
+        self.label_2 = QLabel(self.layoutWidget)
+        self.label_2.setObjectName(u"label_2")
+
+        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
+
+        self.position = QComboBox(self.layoutWidget)
+        self.position.setObjectName(u"position")
+
+        self.gridLayout.addWidget(self.position, 1, 0, 1, 1)
+
+        self.label_3 = QLabel(self.layoutWidget)
+        self.label_3.setObjectName(u"label_3")
+
+        self.gridLayout.addWidget(self.label_3, 0, 1, 1, 1)
+
+        self.action = QComboBox(self.layoutWidget)
+        self.action.setObjectName(u"action")
+
+        self.gridLayout.addWidget(self.action, 1, 1, 1, 1)
 
         self.label_4 = QLabel(self.layoutWidget)
         self.label_4.setObjectName(u"label_4")
@@ -247,8 +258,9 @@ class Ui_tradeEntryDialog(object):
         self.label_12.setText(QCoreApplication.translate("tradeEntryDialog", u"Net Amount", None))
         self.label_11.setText(QCoreApplication.translate("tradeEntryDialog", u"Fees", None))
         self.label_8.setText(QCoreApplication.translate("tradeEntryDialog", u"Underlying", None))
-        self.position.setPlaceholderText(QCoreApplication.translate("tradeEntryDialog", u"Choose a position...", None))
         self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
+        self.position.setPlaceholderText(QCoreApplication.translate("tradeEntryDialog", u"Choose a position...", None))
+        self.label_3.setText(QCoreApplication.translate("tradeEntryDialog", u"Action", None))
         self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Fill Time", None))
     # retranslateUi
 

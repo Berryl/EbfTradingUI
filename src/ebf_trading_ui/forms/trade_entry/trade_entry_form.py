@@ -19,15 +19,15 @@ class TradeEntryForm(QDialog):
 
         self.ui = Ui_tradeEntryDialog()
         self.ui.setupUi(self)
+        self.ui.netAmount.setReadOnly(True)
 
         self._build_model(record)
         self._build_validation()
         self._setup_bindings()
         self._setup_commands()
 
-        self.ui.position.setFocus()
-
     # region Setup
+
     def _build_model(self, record: TradeRecord) -> None:
         self.model = TradeEntryViewModel.from_record(record)
         self.tracker = StateTracker(self.model)
@@ -45,6 +45,7 @@ class TradeEntryForm(QDialog):
             get_text=str,
             get_value=lambda: self.model.position_spec,
             set_value=lambda value: setattr(self.model, "position_spec", value),
+            sync_ui=self._update_net_amount,
         )
 
         self.fill_time_binding = LineEditBinding(
@@ -54,33 +55,64 @@ class TradeEntryForm(QDialog):
             set_value=lambda value: setattr(self.model, "fill_time", value),
         )
 
+        self.contracts_binding = LineEditBinding(
+            line_edit=self.ui.contracts,
+            tracker=self.tracker,
+            get_value=lambda: self.model.contracts,
+            set_value=lambda value: setattr(self.model, "contracts", value),
+            sync_ui=self._update_net_amount,
+        )
+
         self.premium_binding = LineEditBinding(
             line_edit=self.ui.premium,
             tracker=self.tracker,
             get_value=lambda: self.model.premium,
             set_value=lambda value: setattr(self.model, "premium", value),
+            sync_ui=self._update_net_amount,
+        )
+
+        self.fees_binding = LineEditBinding(
+            line_edit=self.ui.fees,
+            tracker=self.tracker,
+            get_value=lambda: self.model.fees,
+            set_value=lambda value: setattr(self.model, "fees", value),
+            sync_ui=self._update_net_amount,
         )
 
         self.form = FormBinding([
             self.position_binding,
             self.fill_time_binding,
+            self.contracts_binding,
+            self.premium_binding,
+            self.fees_binding,
         ])
 
         self.tracker.begin_edit()
+        self._update_net_amount()
+
+    # endregion
+
+    # region Computed display
+
+    def _update_net_amount(self) -> None:
+        self.ui.netAmount.set_money(self.model.net_amount())
 
     # endregion
 
     # region Validation
+
     def _validate(self) -> ValidationResult:
         return self.model.validate()
 
     # endregion
 
     # region Commands
+
     def _setup_commands(self) -> None:
         self.ui.saveButtonBox.accepted.connect(self._save)
         self.ui.saveButtonBox.rejected.connect(self.reject)
 
     def _save(self) -> None:
         pass
+
     # endregion
