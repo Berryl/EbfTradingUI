@@ -25,6 +25,8 @@ class TradeEntryForm(QDialog):
         self._build_validation()
         self._setup_bindings()
         self._setup_commands()
+        
+        self.ui.underlying.setReadOnly(self.model.underlying_locked)
 
     # region Setup
 
@@ -79,12 +81,36 @@ class TradeEntryForm(QDialog):
             sync_ui=self._update_net_amount,
         )
 
+        self.expiration_date_binding = LineEditBinding(
+            line_edit=self.ui.expiration,
+            tracker=self.tracker,
+            get_value=lambda: self.model.expiration,
+            set_value=lambda value: setattr(self.model, "expiration", value),
+        )
+
+        self.strike_price_binding = LineEditBinding(
+            line_edit=self.ui.strike,
+            tracker=self.tracker,
+            get_value=lambda: self.model.strike,
+            set_value=lambda value: setattr(self.model, "strike", value),
+        )
+
+        self.underlying_binding = LineEditBinding(
+            line_edit=self.ui.underlying,
+            tracker=self.tracker,
+            get_value=lambda: self.model.underlying,
+            set_value=lambda value: setattr(self.model, "underlying", value),
+        )
+
         self.form = FormBinding([
             self.position_binding,
             self.fill_time_binding,
             self.contracts_binding,
             self.premium_binding,
             self.fees_binding,
+            self.expiration_date_binding,
+            self.strike_price_binding,
+            self.underlying_binding,
         ])
 
         self.tracker.begin_edit()

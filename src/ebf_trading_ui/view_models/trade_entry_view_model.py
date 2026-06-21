@@ -8,9 +8,10 @@ from ebf_domain.rules.validation_result import ValidationResult
 from ebf_trading.domain.value_objects.option_specific.input.option_fill_input import OptionFillInput
 from ebf_trading.domain.value_objects.option_specific.input.option_input import OptionInput
 from ebf_trading.domain.value_objects.positions.position_side import PositionSide
+from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
+
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
 from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
-from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
 
 
 @dataclass
@@ -41,6 +42,7 @@ class TradeEntryViewModel:
     limit_price: str = ""
     high_of_day: str = ""
     low_of_day: str = ""
+
     # endregion
 
     def __post_init__(self) -> None:
@@ -73,8 +75,9 @@ class TradeEntryViewModel:
 
         return cls(
             position_spec=position_spec,
-            strike=str(record.strike_amount),
-            expiration=_format_date(record.expiration_deadline.date()),
+            strike=str(record.strike_amount) if record.strike_amount is not None else "",
+            expiration=_format_date(
+                record.expiration_deadline.date()) if record.expiration_deadline is not None else "",
             premium=premium,
             fees=fees,
             fill_time=fill_time,
