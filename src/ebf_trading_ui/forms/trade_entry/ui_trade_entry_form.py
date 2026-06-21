@@ -72,6 +72,7 @@ class Ui_tradeEntryDialog(object):
 
         self.premium = MoneyLineEdit(self.layoutWidget)
         self.premium.setObjectName(u"premium")
+        self.premium.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.premium, 3, 1, 1, 1)
 
@@ -82,6 +83,9 @@ class Ui_tradeEntryDialog(object):
 
         self.netAmount = MoneyLineEdit(self.layoutWidget)
         self.netAmount.setObjectName(u"netAmount")
+        self.netAmount.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.netAmount.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.netAmount.setReadOnly(True)
 
         self.gridLayout.addWidget(self.netAmount, 3, 3, 1, 1)
 
@@ -97,6 +101,7 @@ class Ui_tradeEntryDialog(object):
 
         self.strike = MoneyLineEdit(self.layoutWidget)
         self.strike.setObjectName(u"strike")
+        self.strike.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.strike, 5, 1, 1, 1)
 
@@ -117,6 +122,7 @@ class Ui_tradeEntryDialog(object):
 
         self.fees = MoneyLineEdit(self.layoutWidget)
         self.fees.setObjectName(u"fees")
+        self.fees.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.fees, 3, 2, 1, 1)
 
@@ -138,6 +144,7 @@ class Ui_tradeEntryDialog(object):
 
         self.contracts = IntLineEdit(self.layoutWidget)
         self.contracts.setObjectName(u"contracts")
+        self.contracts.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.contracts, 3, 0, 1, 1)
 
@@ -148,6 +155,7 @@ class Ui_tradeEntryDialog(object):
 
         self.limitPrice = MoneyLineEdit(self.layoutWidget)
         self.limitPrice.setObjectName(u"limitPrice")
+        self.limitPrice.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.limitPrice, 8, 0, 1, 1)
 
@@ -158,17 +166,20 @@ class Ui_tradeEntryDialog(object):
 
         self.highOfDay = MoneyLineEdit(self.layoutWidget)
         self.highOfDay.setObjectName(u"highOfDay")
+        self.highOfDay.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.highOfDay, 8, 1, 1, 1)
 
         self.lowOfDay = MoneyLineEdit(self.layoutWidget)
         self.lowOfDay.setObjectName(u"lowOfDay")
+        self.lowOfDay.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.lowOfDay, 8, 2, 1, 1)
 
         self.score = QLineEdit(self.layoutWidget)
         self.score.setObjectName(u"score")
         self.score.setEnabled(False)
+        self.score.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.score, 8, 3, 1, 1)
 
@@ -204,6 +215,7 @@ class Ui_tradeEntryDialog(object):
 
         self.fillTime = DateTimeLineEdit(self.layoutWidget)
         self.fillTime.setObjectName(u"fillTime")
+        self.fillTime.setMaximumSize(QSize(281, 16777215))
 
         self.gridLayout.addWidget(self.fillTime, 1, 2, 1, 2)
 
@@ -260,7 +272,7 @@ class Ui_tradeEntryDialog(object):
         self.label_8.setText(QCoreApplication.translate("tradeEntryDialog", u"Underlying", None))
         self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
         self.position.setPlaceholderText(QCoreApplication.translate("tradeEntryDialog", u"Choose a position...", None))
-        self.label_3.setText(QCoreApplication.translate("tradeEntryDialog", u"Action", None))
+        self.label_3.setText(QCoreApplication.translate("tradeEntryDialog", u"Transaction", None))
         self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Fill Time", None))
     # retranslateUi
 
