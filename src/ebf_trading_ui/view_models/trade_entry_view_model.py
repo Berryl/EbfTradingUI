@@ -3,11 +3,18 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import InvalidOperation
 
+from ebf_core.date_time.parsers import parse_flex_datetime
 from ebf_domain.money.money import Money
 from ebf_domain.rules.validation_result import ValidationResult
+from ebf_trading.domain.value_objects.option_specific.expiration_date import ExpirationDate
 from ebf_trading.domain.value_objects.option_specific.input.option_fill_input import OptionFillInput
 from ebf_trading.domain.value_objects.option_specific.input.option_input import OptionInput
+from ebf_trading.domain.value_objects.option_specific.option import Option
+from ebf_trading.domain.value_objects.option_specific.strike import Strike
+from ebf_trading.domain.value_objects.option_specific.symbol_conversion.symbol_converter import OptionSymbolFormat, \
+    to_symbol
 from ebf_trading.domain.value_objects.positions.position_side import PositionSide
+from ebf_trading.domain.value_objects.symbol import Symbol
 from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
 
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
@@ -111,6 +118,28 @@ class TradeEntryViewModel:
         if self.position_spec.side == PositionSide.LONG:
             return -(gross + fees)
         return gross - fees
+
+    def symbol(self) -> str | None:
+        """OCC-style option symbol (unpadded). None if any component is invalid."""
+        if self.position_spec is None:
+            return None
+
+        try:
+            underlying = Symbol(self.underlying)
+            strike = Strike.from_amount(self.strike)
+            parsed = parse_flex_datetime(self.expiration)
+            expiration = ExpirationDate.from_date(parsed.date())
+        except (ValueError, InvalidOperation, TypeError):
+            return None
+
+        option = Option(
+            underlying=underlying,
+            strike=strike,
+            option_type=self.position_spec.option_type,
+            expiration=expiration,
+        )
+
+        return to_symbol(option, OptionSymbolFormat.OCC)
 
     # endregion
 

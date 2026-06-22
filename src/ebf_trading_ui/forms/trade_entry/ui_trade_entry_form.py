@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog
     QDialogButtonBox, QFrame, QGridLayout, QLabel,
     QLineEdit, QSizePolicy, QVBoxLayout, QWidget)
 
+from ebf_ui.widgets.custom.date_line_edit import DateLineEdit
 from ebf_ui.widgets.custom.date_time_line_edit import DateTimeLineEdit
 from ebf_ui.widgets.custom.int_line_edit import IntLineEdit
 from ebf_ui.widgets.custom.money_line_edit import MoneyLineEdit
@@ -129,6 +130,7 @@ class Ui_tradeEntryDialog(object):
         self.symbol = QLineEdit(self.layoutWidget)
         self.symbol.setObjectName(u"symbol")
         self.symbol.setEnabled(False)
+        self.symbol.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.gridLayout.addWidget(self.symbol, 5, 3, 1, 1)
 
@@ -161,6 +163,7 @@ class Ui_tradeEntryDialog(object):
 
         self.tradeNarrative = QLineEdit(self.layoutWidget)
         self.tradeNarrative.setObjectName(u"tradeNarrative")
+        self.tradeNarrative.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.gridLayout.addWidget(self.tradeNarrative, 6, 0, 1, 4)
 
@@ -179,24 +182,25 @@ class Ui_tradeEntryDialog(object):
         self.score = QLineEdit(self.layoutWidget)
         self.score.setObjectName(u"score")
         self.score.setEnabled(False)
+        self.score.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.score.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout.addWidget(self.score, 8, 3, 1, 1)
 
-        self.expiration = QLineEdit(self.layoutWidget)
+        self.expiration = DateLineEdit(self.layoutWidget)
         self.expiration.setObjectName(u"expiration")
 
         self.gridLayout.addWidget(self.expiration, 5, 0, 1, 1)
-
-        self.label_2 = QLabel(self.layoutWidget)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.position = QComboBox(self.layoutWidget)
         self.position.setObjectName(u"position")
 
         self.gridLayout.addWidget(self.position, 1, 0, 1, 1)
+
+        self.label_2 = QLabel(self.layoutWidget)
+        self.label_2.setObjectName(u"label_2")
+
+        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
 
         self.label_3 = QLabel(self.layoutWidget)
         self.label_3.setObjectName(u"label_3")
@@ -230,20 +234,20 @@ class Ui_tradeEntryDialog(object):
 
         self.verticalLayout.addWidget(self.saveButtonBox)
 
-        QWidget.setTabOrder(self.position, self.fillTime)
+        QWidget.setTabOrder(self.position, self.action)
+        QWidget.setTabOrder(self.action, self.fillTime)
         QWidget.setTabOrder(self.fillTime, self.contracts)
         QWidget.setTabOrder(self.contracts, self.premium)
         QWidget.setTabOrder(self.premium, self.fees)
-        QWidget.setTabOrder(self.fees, self.netAmount)
-        QWidget.setTabOrder(self.netAmount, self.expiration)
+        QWidget.setTabOrder(self.fees, self.expiration)
         QWidget.setTabOrder(self.expiration, self.strike)
         QWidget.setTabOrder(self.strike, self.underlying)
-        QWidget.setTabOrder(self.underlying, self.symbol)
-        QWidget.setTabOrder(self.symbol, self.tradeNarrative)
+        QWidget.setTabOrder(self.underlying, self.tradeNarrative)
         QWidget.setTabOrder(self.tradeNarrative, self.limitPrice)
         QWidget.setTabOrder(self.limitPrice, self.highOfDay)
         QWidget.setTabOrder(self.highOfDay, self.lowOfDay)
         QWidget.setTabOrder(self.lowOfDay, self.score)
+        QWidget.setTabOrder(self.score, self.symbol)
 
         self.retranslateUi(tradeEntryDialog)
         self.saveButtonBox.accepted.connect(tradeEntryDialog.accept)
@@ -270,8 +274,8 @@ class Ui_tradeEntryDialog(object):
         self.label_12.setText(QCoreApplication.translate("tradeEntryDialog", u"Net Amount", None))
         self.label_11.setText(QCoreApplication.translate("tradeEntryDialog", u"Fees", None))
         self.label_8.setText(QCoreApplication.translate("tradeEntryDialog", u"Underlying", None))
-        self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
         self.position.setPlaceholderText(QCoreApplication.translate("tradeEntryDialog", u"Choose a position...", None))
+        self.label_2.setText(QCoreApplication.translate("tradeEntryDialog", u"Position", None))
         self.label_3.setText(QCoreApplication.translate("tradeEntryDialog", u"Transaction", None))
         self.label_4.setText(QCoreApplication.translate("tradeEntryDialog", u"Fill Time", None))
     # retranslateUi

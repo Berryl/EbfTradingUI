@@ -25,7 +25,7 @@ class TradeEntryForm(QDialog):
         self._build_validation()
         self._setup_bindings()
         self._setup_commands()
-        
+
         self.ui.underlying.setReadOnly(self.model.underlying_locked)
 
     # region Setup
@@ -47,7 +47,7 @@ class TradeEntryForm(QDialog):
             get_text=str,
             get_value=lambda: self.model.position_spec,
             set_value=lambda value: setattr(self.model, "position_spec", value),
-            sync_ui=self._update_net_amount,
+            sync_ui=self._on_position_changed,
         )
 
         self.fill_time_binding = LineEditBinding(
@@ -86,6 +86,7 @@ class TradeEntryForm(QDialog):
             tracker=self.tracker,
             get_value=lambda: self.model.expiration,
             set_value=lambda value: setattr(self.model, "expiration", value),
+            sync_ui=self._update_symbol,
         )
 
         self.strike_price_binding = LineEditBinding(
@@ -93,6 +94,7 @@ class TradeEntryForm(QDialog):
             tracker=self.tracker,
             get_value=lambda: self.model.strike,
             set_value=lambda value: setattr(self.model, "strike", value),
+            sync_ui=self._update_symbol,
         )
 
         self.underlying_binding = LineEditBinding(
@@ -100,6 +102,7 @@ class TradeEntryForm(QDialog):
             tracker=self.tracker,
             get_value=lambda: self.model.underlying,
             set_value=lambda value: setattr(self.model, "underlying", value),
+            sync_ui=self._update_symbol,
         )
 
         self.form = FormBinding([
@@ -122,6 +125,13 @@ class TradeEntryForm(QDialog):
 
     def _update_net_amount(self) -> None:
         self.ui.netAmount.set_money(self.model.net_amount())
+
+    def _update_symbol(self) -> None:
+        self.ui.symbol.setText(self.model.symbol() or "")
+
+    def _on_position_changed(self) -> None:
+        self._update_net_amount()
+        self._update_symbol()
 
     # endregion
 

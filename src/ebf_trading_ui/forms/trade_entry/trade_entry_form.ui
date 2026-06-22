@@ -180,6 +180,9 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::NoFocus</enum>
+         </property>
         </widget>
        </item>
        <item row="2" column="3">
@@ -218,7 +221,11 @@
         </widget>
        </item>
        <item row="6" column="0" colspan="4">
-        <widget class="QLineEdit" name="tradeNarrative"/>
+        <widget class="QLineEdit" name="tradeNarrative">
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::NoFocus</enum>
+         </property>
+        </widget>
        </item>
        <item row="8" column="1">
         <widget class="MoneyLineEdit" name="highOfDay">
@@ -238,6 +245,9 @@
         <widget class="QLineEdit" name="score">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::NoFocus</enum>
          </property>
          <property name="alignment">
           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -331,20 +341,20 @@
  </customwidgets>
  <tabstops>
   <tabstop>position</tabstop>
+  <tabstop>action</tabstop>
   <tabstop>fillTime</tabstop>
   <tabstop>contracts</tabstop>
   <tabstop>premium</tabstop>
   <tabstop>fees</tabstop>
-  <tabstop>netAmount</tabstop>
   <tabstop>expiration</tabstop>
   <tabstop>strike</tabstop>
   <tabstop>underlying</tabstop>
-  <tabstop>symbol</tabstop>
   <tabstop>tradeNarrative</tabstop>
   <tabstop>limitPrice</tabstop>
   <tabstop>highOfDay</tabstop>
   <tabstop>lowOfDay</tabstop>
   <tabstop>score</tabstop>
+  <tabstop>symbol</tabstop>
  </tabstops>
  <resources/>
  <connections>
