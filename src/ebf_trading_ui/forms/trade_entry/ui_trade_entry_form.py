@@ -130,6 +130,9 @@ class Ui_tradeEntryDialog(object):
         self.symbol = QLineEdit(self.layoutWidget)
         self.symbol.setObjectName(u"symbol")
         self.symbol.setEnabled(False)
+        font1 = QFont()
+        font1.setPointSize(8)
+        self.symbol.setFont(font1)
         self.symbol.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.gridLayout.addWidget(self.symbol, 5, 3, 1, 1)

@@ -312,15 +312,18 @@ class TestTradeEntryForm:
                         assert sut.model.underlying_locked
 
         class TestSymbol:
-            class TestWhenNoPositionSelected:
 
-                def test_returns_none(self):
-                    model = TradeEntryViewModel(
-                        underlying="AAPL",
-                        strike="100.00",
-                        expiration="Jun-21 2026",
-                    )
-                    assert model.symbol() is None
+            def test_computation_depends_on_all_components_being_valued(self, ui, model):
+                assert model.symbol() is None
+                ui.position.setCurrentIndex(ui.position.findData(LC))
+                assert model.symbol() is None
+                ui.underlying.setText("msft")
+                assert model.symbol() is None
+                ui.strike.setText("100.00")
+                assert model.symbol() is None
+                ui.expiration.setText("Jun-21 2026")
+
+                assert model.symbol() == "MSFT260621C00100000"
 
             class TestWhenLongCall:
 

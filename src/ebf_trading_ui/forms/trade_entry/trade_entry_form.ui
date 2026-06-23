@@ -180,6 +180,11 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::FocusPolicy::NoFocus</enum>
          </property>
