@@ -4,9 +4,9 @@ from datetime import datetime
 from PySide6.QtWidgets import QApplication
 
 from ebf_domain.money.money import Money
+from ebf_trading.application import FilledOptionTradeInput
 from ebf_trading.domain.value_objects.option_specific.option_type import OptionType
 from ebf_trading.domain.value_objects.positions.position_side import PositionSide
-
 from ebf_trading_ui.forms.trade_entry.trade_entry_form import TradeEntryForm
 from ebf_trading_ui.view_models.ports.null_trade_record import NullTradeRecord
 
@@ -16,9 +16,8 @@ class DemoFillRecord:
     fees = Money.mint("1.00")
     fill_time = datetime(2026, 6, 15, 9, 30, 0)
 
-def _save(self) -> None:
-    print(self.model)
-    self.accept()
+def _save(trade: FilledOptionTradeInput) -> None:
+    print(trade)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -29,10 +28,7 @@ if __name__ == "__main__":
         fill=DemoFillRecord(),
     )
 
-    form = TradeEntryForm(NullTradeRecord())
-    form.ui.saveButtonBox.clicked.connect(
-        _save
-    )
+    form = TradeEntryForm(NullTradeRecord(), _save)
     form.resize(820, 420)
     form.show()
 

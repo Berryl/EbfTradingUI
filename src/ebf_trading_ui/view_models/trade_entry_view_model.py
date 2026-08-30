@@ -5,20 +5,24 @@ from decimal import InvalidOperation
 
 from ebf_core.date_time.parsers import parse_flex_datetime
 from ebf_domain.money.money import Money
+from ebf_domain.rules.rule_violation import RuleViolation
 from ebf_domain.rules.validation_result import ValidationResult
+from ebf_trading.application import FilledOptionTradeInput
 from ebf_trading.domain.value_objects.option_specific.expiration_date import ExpirationDate
 from ebf_trading.domain.value_objects.option_specific.input.option_fill_input import OptionFillInput
 from ebf_trading.domain.value_objects.option_specific.input.option_input import OptionInput
 from ebf_trading.domain.value_objects.option_specific.option import Option
 from ebf_trading.domain.value_objects.option_specific.strike import Strike
-from ebf_trading.domain.value_objects.option_specific.symbol_conversion.symbol_converter import OptionSymbolFormat, \
-    to_symbol
+from ebf_trading.domain.value_objects.option_specific.symbol_conversion.symbol_converter import (
+    OptionSymbolFormat,
+    to_symbol,
+)
 from ebf_trading.domain.value_objects.positions.position_side import PositionSide
+from ebf_trading.domain.value_objects.quantities.contract_quantity import ContractQuantity
 from ebf_trading.domain.value_objects.symbol import Symbol
-from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
-
 from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
 from ebf_trading_ui.view_models.position_spec import ALL, PositionSpec
+from ebf_ui.widgets.custom.date_time_line_edit import _format_date, _format_datetime
 
 
 @dataclass
@@ -162,6 +166,48 @@ class TradeEntryViewModel:
             ).validate().violations
         )
 
+        result.add_violations(
+            Symbol.FIELD_RULES["value"].validate(
+                "underlying",
+                Symbol.standardize(self.underlying),
+            )
+        )
+
+        try:
+            contracts = int(self.contracts)
+        except (TypeError, ValueError):
+            result.add_violation(
+                RuleViolation(
+                    field_name="contracts",
+                    message="must be a whole number",
+                    rule_name="invalid_contracts",
+                    actual_value=self.contracts,
+                )
+            )
+        else:
+            result.add_violations(ContractQuantity.validate_input(contracts).violations)
+
         return result
+
+    def to_filled_option_trade_input(self) -> FilledOptionTradeInput:
+        """Build the application input after validating the current form state."""
+        validation = self.validate()
+        if not validation:
+            raise ValueError(str(validation))
+
+        if self.position_spec is None:
+            raise ValueError("Position is required")
+
+        return FilledOptionTradeInput(
+            ticker=Symbol(self.underlying).value,
+            option_type=self.position_spec.option_type,
+            strike=Strike.from_amount(self.strike).price,
+            expiration=parse_flex_datetime(self.expiration).date(),
+            side=self.position_spec.side,
+            contracts=ContractQuantity(int(self.contracts)).contracts,
+            fill_price=Money.mint(self.premium),
+            fees=Money.mint(self.fees),
+            fill_time=parse_flex_datetime(self.fill_time),
+        )
 
     # endregion

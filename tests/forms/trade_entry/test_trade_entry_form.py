@@ -1,19 +1,20 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 
 import pytest
+
 from ebf_domain.money.money import Money
+from ebf_trading.application import FilledOptionTradeInput
 from ebf_trading.domain.value_objects.option_specific.option_type import OptionType
 from ebf_trading.domain.value_objects.positions.position_side import PositionSide
-from ebf_ui.state.state_tracker import StateTracker
-from ebf_ui.widgets.custom.date_time_line_edit import _format_datetime
-
 from ebf_trading_ui.forms.trade_entry.trade_entry_form import TradeEntryForm
 from ebf_trading_ui.forms.trade_entry.ui_trade_entry_form import Ui_tradeEntryDialog
 from ebf_trading_ui.view_models.ports.null_trade_record import NullTradeRecord
 from ebf_trading_ui.view_models.ports.trade_record import FillRecord
-from ebf_trading_ui.view_models.position_spec import LC, SP, SC
+from ebf_trading_ui.view_models.position_spec import LC, SC, SP
 from ebf_trading_ui.view_models.trade_entry_view_model import TradeEntryViewModel
+from ebf_ui.state.state_tracker import StateTracker
+from ebf_ui.widgets.custom.date_time_line_edit import _format_datetime
 
 
 @dataclass
@@ -30,7 +31,7 @@ def _create_sut(
         fill: FillRecord | None = None,
 ) -> TradeEntryForm:
     record = NullTradeRecord(side=side, option_type=option_type, fill=fill)
-    form = TradeEntryForm(record)
+    form = TradeEntryForm(record, lambda _: None)
     qtbot.addWidget(form)
     return form
 
@@ -40,7 +41,7 @@ class TestTradeEntryForm:
 
         @pytest.fixture
         def sut(self, qtbot) -> TradeEntryForm:
-            form = TradeEntryForm(NullTradeRecord())
+            form = TradeEntryForm(NullTradeRecord(), lambda _: None)
             qtbot.addWidget(form)
             return form
 
@@ -293,7 +294,7 @@ class TestTradeEntryForm:
                 @pytest.fixture
                 def sut(self, qtbot) -> TradeEntryForm:
                     record = NullTradeRecord(underlying="SPCX")
-                    form = TradeEntryForm(record)
+                    form = TradeEntryForm(record, lambda _: None)
                     qtbot.addWidget(form)
                     return form
 
@@ -317,6 +318,7 @@ class TestTradeEntryForm:
                 assert model.symbol() is None
                 ui.position.setCurrentIndex(ui.position.findData(LC))
                 assert model.symbol() is None
+                # noinspection SpellCheckingInspection
                 ui.underlying.setText("msft")
                 assert model.symbol() is None
                 ui.strike.setText("100.00")
@@ -329,6 +331,7 @@ class TestTradeEntryForm:
 
                 @pytest.fixture
                 def symbol(self) -> str:
+                    # noinspection SpellCheckingInspection
                     vm = TradeEntryViewModel(
                         position_spec=LC,
                         underlying="aapl",
@@ -367,7 +370,7 @@ class TestTradeEntryForm:
                         ("AAPL", "100.00", ""),
                         ("AAPL", "not money", "Jun-21 2026"),
                         ("AAPL", "100.00", "not a date"),
-                        ("AAPLTOOLONG", "100.00", "Jun-21 2026"),
+                        ("JUST-WAY-TOOLONG", "100.00", "Jun-21 2026"),
                     ],
                 )
                 def test_returns_none(self, underlying, strike, expiration):
@@ -433,3 +436,83 @@ class TestTradeEntryForm:
 
                 def test_widget_binding_reflects_model_fill_time(self, sut):
                     assert sut.ui.fillTime.text() == sut.model.fill_time
+
+    class TestSave:
+
+        @staticmethod
+        def _enter_valid_trade(form: TradeEntryForm) -> None:
+            form.ui.position.setCurrentIndex(form.ui.position.findData(LC))
+            form.ui.contracts.setText("2")
+            form.ui.premium.setText("1.25")
+            form.ui.fees.setText("1.30")
+            form.ui.expiration.setText("Sep-18 2026")
+            form.ui.strike.setText("100.00")
+            # noinspection SpellCheckingInspection
+            form.ui.underlying.setText("aapl")
+            form.ui.fillTime.setText("Aug-28 2026 10:30")
+
+        def test_valid_state_sends_expected_input_and_accepts(self, qtbot, monkeypatch):
+            saved: list[FilledOptionTradeInput] = []
+            form = TradeEntryForm(NullTradeRecord(), saved.append)
+            qtbot.addWidget(form)
+            self._enter_valid_trade(form)
+
+            def fail_on_error(message: str) -> None:
+                pytest.fail(message)
+
+            monkeypatch.setattr(form, "_show_save_error", fail_on_error)
+
+            form._save()
+
+            assert saved == [
+                FilledOptionTradeInput(
+                    ticker="AAPL",
+                    option_type=OptionType.CALL,
+                    strike=Money.mint("100.00"),
+                    expiration=date(2026, 9, 18),
+                    side=PositionSide.LONG,
+                    contracts=2,
+                    fill_price=Money.mint("1.25"),
+                    fees=Money.mint("1.30"),
+                    fill_time=datetime(2026, 8, 28, 10, 30),
+                )
+            ]
+            assert form.result() == TradeEntryForm.DialogCode.Accepted
+
+        @pytest.mark.parametrize(
+            ("field_name", "invalid_value"),
+            [("underlying", ""), ("contracts", "")],
+        )
+        def test_required_trade_field_prevents_callback(
+            self, qtbot, monkeypatch, field_name, invalid_value
+        ):
+            saved: list[FilledOptionTradeInput] = []
+            form = TradeEntryForm(NullTradeRecord(), saved.append)
+            qtbot.addWidget(form)
+            self._enter_valid_trade(form)
+            setattr(form.model, field_name, invalid_value)
+            errors: list[str] = []
+            monkeypatch.setattr(form, "_show_save_error", errors.append)
+
+            form._save()
+
+            assert saved == []
+            assert errors
+            assert form.result() != TradeEntryForm.DialogCode.Accepted
+
+        def test_callback_failure_does_not_accept(self, qtbot, monkeypatch):
+            def fail(_: FilledOptionTradeInput) -> None:
+                raise RuntimeError("save failed")
+
+            form = TradeEntryForm(NullTradeRecord(), fail)
+            qtbot.addWidget(form)
+            self._enter_valid_trade(form)
+            errors: list[str] = []
+            monkeypatch.setattr(form, "_show_save_error", errors.append)
+            form.show()
+
+            form._save()
+
+            assert errors == ["save failed"]
+            assert form.result() != TradeEntryForm.DialogCode.Accepted
+            assert form.isVisible()

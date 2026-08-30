@@ -1,21 +1,31 @@
-from PySide6.QtWidgets import QDialog
+from collections.abc import Callable
+
+from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
+
 from ebf_domain.rules.validation_result import ValidationResult
+from ebf_trading.application import FilledOptionTradeInput
+from ebf_trading_ui.forms.trade_entry.ui_trade_entry_form import Ui_tradeEntryDialog
+from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
+from ebf_trading_ui.view_models.position_spec import ALL
+from ebf_trading_ui.view_models.trade_entry_view_model import TradeEntryViewModel
 from ebf_ui.binding.validation.validation_binding import ValidationBinding, bind_validation
 from ebf_ui.state.state_tracker import StateTracker
 from ebf_ui.widgets.fields.combo_box_binding import ComboBoxBinding
 from ebf_ui.widgets.fields.line_edit_binding import LineEditBinding
 from ebf_ui.widgets.forms.form_binding import FormBinding
 
-from ebf_trading_ui.forms.trade_entry.ui_trade_entry_form import Ui_tradeEntryDialog
-from ebf_trading_ui.view_models.ports.trade_record import TradeRecord
-from ebf_trading_ui.view_models.position_spec import ALL
-from ebf_trading_ui.view_models.trade_entry_view_model import TradeEntryViewModel
-
 
 class TradeEntryForm(QDialog):
 
-    def __init__(self, record: TradeRecord, parent=None):
+    def __init__(
+        self,
+        record: TradeRecord,
+        save_trade: Callable[[FilledOptionTradeInput], None],
+        parent: QWidget | None = None,
+    ) -> None:
         super().__init__(parent)
+
+        self._save_trade = save_trade
 
         self.ui = Ui_tradeEntryDialog()
         self.ui.setupUi(self)
@@ -149,6 +159,21 @@ class TradeEntryForm(QDialog):
         self.ui.saveButtonBox.rejected.connect(self.reject)
 
     def _save(self) -> None:
-        pass
+        self.validation.update()
+        if not self.validation.is_valid:
+            self._show_save_error("\n".join(self.validation.ui_error_messages))
+            return
+
+        try:
+            trade = self.model.to_filled_option_trade_input()
+            self._save_trade(trade)
+        except Exception as error:  # Keep the entry dialog open for correction/retry.
+            self._show_save_error(str(error))
+            return
+
+        self.accept()
+
+    def _show_save_error(self, message: str) -> None:
+        QMessageBox.critical(self, "Unable to save trade", message)
 
     # endregion

@@ -253,7 +253,6 @@ class Ui_tradeEntryDialog(object):
         QWidget.setTabOrder(self.score, self.symbol)
 
         self.retranslateUi(tradeEntryDialog)
-        self.saveButtonBox.accepted.connect(tradeEntryDialog.accept)
         self.saveButtonBox.rejected.connect(tradeEntryDialog.reject)
 
         QMetaObject.connectSlotsByName(tradeEntryDialog)

@@ -365,22 +365,6 @@
  <connections>
   <connection>
    <sender>saveButtonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>tradeEntryDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>saveButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>tradeEntryDialog</receiver>
    <slot>reject()</slot>
